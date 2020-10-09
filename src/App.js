@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { RandomINC, RandomDEC} from './rootReducer/counterAction';
 
-function App() {
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>{props.count.num}</div>
+      <button onClick={props.RandomINC}>Increase Count</button>
+      <button onClick={props.RandomDEC}>Decrease Count</button>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    count: state.numbers,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    RandomINC: () => dispatch(RandomINC()),
+
+    RandomDEC: () => dispatch(RandomDEC()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
